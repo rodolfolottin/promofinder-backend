@@ -1,1 +1,1 @@
-# promo-researcher-api
+# Promo Researcher App's API
