@@ -1,7 +1,8 @@
 import twitter
 import twitter_settings as ts
-from datetime import date, timedelta
 import re
+import arrow
+from datetime import datetime
 
 
 def parse_link_from_text(text):
@@ -13,6 +14,23 @@ def parse_link_from_text(text):
     return 'Not known'
 
 
+def humanize_date(string_date):
+    if string_date:
+        try:
+            date = datetime_from_string(string_date)
+            return arrow.get(date).humanize()
+        except:
+            pass
+    return 'Not known'
+
+
+def datetime_from_string(str_date):
+    try:
+        return datetime.strptime(re.sub(r'\+\d+\S', '', str_date), '%a %b %d %H:%M:%S %Y')
+    except:
+        return None
+
+
 class TwitterHandler(object):
     def __init__(self):
         self.api = twitter.Api(
@@ -22,24 +40,27 @@ class TwitterHandler(object):
                         access_token_secret=ts.ACCESS_TOKEN_SECRET
                     )
 
-    def fetch_hardmob_promos(self, item_match=None, date_range=20):
+    def fetch_hardmob_promos(self, item_match=None):
         """
         Fetches hardmob sale's tweets and, if item_match given, returns only the ones with the item's text
         :param item_match: item to be matched
         :type: string
-        :param date_range: Date range in days
-        :type date_range: int
-        :param log_error: error log function
         :return: list of tweets
         """
 
         tweets = self.api.GetUserTimeline(screen_name='hardmob_promo', count=200)
         if item_match:
             tweets = [t for t in tweets if item_match in t.text.lower()]
-        return [{'item': t.text, 'created_at': t.created_at, 'link': parse_link_from_text(t.text)} for t in tweets]
+        return [self._extract_data(t) for t in tweets]
 
+    def _extract_data(self, tweet):
+        date = humanize_date(tweet.created_at)
+        link = parse_link_from_text(tweet.text)
+        text = tweet.text.replace(link, '').strip()
 
-if __name__ == '__main__':
-    twitter = TwitterHandler()
-    for tweet in twitter.fetch_hardmob_promos():
-        print(tweet)
+        return {
+                'created_at': date,
+                'item': text,
+                'link': link
+            }
+
