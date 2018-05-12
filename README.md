@@ -1,1 +1,5 @@
-# Promo Researcher App's API
+# promofinder-backend
+
+The backend for the promofinder app.
+
+
