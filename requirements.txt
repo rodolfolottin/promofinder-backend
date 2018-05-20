@@ -1,0 +1,4 @@
+arrow==0.10.0
+Flask==0.12
+pytest==3.5.1
+python-twitter==3.2.1

@@ -10,26 +10,29 @@ The backend for the promofinder app.
     $ git clone https://github.com/rodolfolottin/promofinder-backend
     ```
 
-2. Make sure that you have pip and python3.6 installed.
+2. Make sure that you have pipenv and python3.6 installed.
 
-3.  Create a venv folder with python3.6 command:
-
-    ```
-    $ python3.6 -m venv <VENV_NAME>
-    ```
-
-4. Inside the project folder, install the project requirements:
+3. Install the project requirements with Pipenv:
 
     ```
-    $ sudo pip install -r requirements.txt
+    $ pipenv install
     ```
 
-4. Run the app:
+4. Activate your environment:
 
     ```
-    $ cd src/
-    $ python app.py
+    $ pipenv shell
+    ```
+
+5. Get your twitter developers keys.
+
+6. Run the app:
+
+    ```
+    $ python application.py
     ```
 
 ## TODO:
 1. How to run the tests.
+2. Twitter keys
+3. env.example
