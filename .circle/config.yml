@@ -28,7 +28,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            py.test -vv --junitxml=test-reports/output.xml
+            comando-errado
 
       - store_artifacts:
           path: test-reports/
