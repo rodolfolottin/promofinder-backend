@@ -26,8 +26,8 @@ jobs:
   test:
     steps:
       - checkout
-      - run: mkdir test-reports/
       - cd ~/promofinder-backend/
+      - run: mkdir test-reports/
       - run:
           name: run tests
           command: |
