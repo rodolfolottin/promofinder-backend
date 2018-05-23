@@ -6,9 +6,7 @@ jobs:
 
     steps:
       - checkout
-      - cd ~/promofinder-backend/
 
-      # Download and cache dependencies
       - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
 
@@ -28,20 +26,16 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            comando-errado
+            py.test -vv --junitxml=/reports/pytest-report.xml
 
-      - store_artifacts:
-          path: test-reports/
-          destination: tr1
       - store_test_results:
-          path: test-reports/
+          path: /reports
 
-  deploy:
-    - steps:
-      - run:
-        name: Deploy Heroku
-        command: |
-          heroku maintenance:on --app $HEROKU_APP_NAME
-          git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
-          heroku restart --app $HEROKU_APP_NAME
-          heroku maintenance:off --app HEROKU_APP_NAME
+          #
+          #      - run:
+          #        name: Deploy Heroku
+          #        command: |
+          #          heroku maintenance:on --app $HEROKU_APP_NAME
+          #          git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+          #          heroku restart --app $HEROKU_APP_NAME
+          #          heroku maintenance:off --app HEROKU_APP_NAME
