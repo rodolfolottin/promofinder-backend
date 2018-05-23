@@ -23,16 +23,11 @@ jobs:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - "venv"
-  test:
-    steps:
-      - checkout
-      - cd ~/promofinder-backend/
-      - run: mkdir test-reports/
+
       - run:
           name: run tests
           command: |
             . venv/bin/activate
-            pip install -r requirements.txt
             py.test -vv --junitxml=test-reports/output.xml
 
       - store_artifacts:
