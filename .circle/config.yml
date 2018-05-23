@@ -23,9 +23,17 @@ jobs:
           paths:
             - ./venv
 
-  test:
-    override:
-      - py.test -vv ./tests/
+      - run:
+          name: run tests
+          command: |
+            source venv/bin/activate
+            py.test -vv --junitxml=test-reports/output.xml
+
+      - store_artifacts:
+          path: test-reports/
+          destination: tr1
+      - store_test_results:
+          path: test-reports/
 
   deploy:
     - steps:
