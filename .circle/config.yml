@@ -23,9 +23,11 @@ jobs:
           paths:
             - ./venv
 
-  test:
-    override:
-      - py.test -vv ./tests/
+      - run:
+          name: run tests
+          command: |
+            source venv/bin/activate
+            py.test -vv
 
   deploy:
     - steps:
