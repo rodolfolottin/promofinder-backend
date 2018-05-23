@@ -6,7 +6,6 @@ jobs:
 
     steps:
       - checkout
-      - run: mkdir test-reports/
       - cd ~/promofinder-backend/
 
       # Download and cache dependencies
@@ -26,11 +25,14 @@ jobs:
             - "venv"
   test:
     steps:
+      - checkout
+      - run: mkdir test-reports/
       - cd ~/promofinder-backend/
       - run:
           name: run tests
           command: |
             . venv/bin/activate
+            pip install -r requirements.txt
             py.test -vv --junitxml=test-reports/output.xml
 
       - store_artifacts:
