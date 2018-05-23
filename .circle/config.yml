@@ -6,6 +6,8 @@ jobs:
 
     steps:
       - checkout
+      - run: mkdir test-reports/
+      - cd ~/promofinder-backend/
 
       # Download and cache dependencies
       - restore_cache:
