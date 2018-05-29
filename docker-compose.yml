@@ -10,6 +10,8 @@ services:
       FLASK_DEBUG: 1
       FLASK_APP: ./app.py
       ENV: "development"
+    env_file:
+      - .env
 
   db:
     image: postgres:latest
@@ -17,5 +19,5 @@ services:
       - "5432:5432"
     volumes:
       - "./docker/db/pgdata:/var/lib/postgresql/data"
-    environment:
-        POSTGRES_PASSWORD: "postgres"
+    env_file:
+      - .env
